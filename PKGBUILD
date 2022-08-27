@@ -30,6 +30,8 @@ source=("99-jlink.rules.patch" "JLink.svg"
         "JLinkGUIServerExe.desktop"
         "JRunExe.desktop"
         "JMemExe.desktop"
+        "HC32F46x.patch"
+        "HC32F46x.FLM"
 )
 md5sums_i686=('2d60935aa75afc428121c8e84683cca9')
 md5sums_x86_64=('84a022ee3392c577ffbba96732b776b8')
@@ -51,6 +53,8 @@ md5sums=("a57d93b791581c1f36e4c672303bb85d" "83a136d31b296dd8f0e23bc21f9d8e19"
          "a44a41520069f29f68b14985307ac09d"
          "8fa15c29a78bf1c98af5941607ff5a2a"
          "74cb2486441a6e571dcc3327204cd8da"
+         "0c5b2209de046083cda0361e5b19df69"
+         "81567579b5fceddd1e7eea1f5fadf2b8"
         )
 
 install=$pkgname.install
@@ -69,6 +73,11 @@ prepare() {
          else mv JLink_Linux_V${pkgver/./}_arm JLink
     	 fi
     fi
+
+    cd "${srcdir}"
+    patch --forward --strip=1 --input=HC32F46x.patch
+    mkdir JLink/Devices/HDSC
+    cp HC32F46x.FLM JLink/Devices/HDSC/
 }
 
 package(){
